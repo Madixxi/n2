@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natalcia ❤️</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #ffe6f0;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    button {
+      padding: 20px 40px;
+      font-size: 20px;
+      color: white;
+      background-color: #ff66b3;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    #message {
+      font-size: 30px;
+      color: #ff1a75;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 1s ease;
+    }
+
+    #question {
+      font-size: 30px;
+      color: #ff1a75;
+      display: none;
+      margin-top: 20px;
+    }
+
+    #yesNoButtons {
+      display: none;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff1a75;
+      transform: rotate(45deg);
+      animation: float 3s infinite ease-in-out;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff1a75;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    .emoji {
+      font-size: 50px;
+      display: inline-block;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <button onclick="showMessage()">Kliknij mnie!</button>
+    <div id="message">Natalcia, kocham cię! ❤️</div>
+    <div id="question">A czy ty też mnie kochasz?</div>
+    <div id="yesNoButtons">
+      <button onclick="showEmoji('happy')">Tak</button>
+      <button onclick="showEmoji('sad')">Nie</button>
+    </div>
+    <audio id="loveSong" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+    <div id="emoji" class="emoji"></div>
+  </div>
+
+  <script>
+    function showMessage() {
+      const message = document.getElementById("message");
+      message.style.display = "block";
+      createHearts();
+      playMusic();
+      setTimeout(showSecondButton, 3000);  // After 3 seconds show the second button
+    }
+
+    function playMusic() {
+      const music = document.getElementById("loveSong");
+      music.play();
+    }
+
+    function showSecondButton() {
+      const question = document.getElementById("question");
+      question.style.display = "block";
+      const yesNoButtons = document.getElementById("yesNoButtons");
+      yesNoButtons.style.display = "block";
+    }
+
+    function showEmoji(response) {
+      const emojiDiv = document.getElementById("emoji");
+      if (response === 'happy') {
+        emojiDiv.textContent = "😊";  // Happy emoji
+      } else if (response === 'sad') {
+        emojiDiv.textContent = "😢";  // Sad emoji
+      }
+      emojiDiv.style.display = "block";
+      // Disable further button clicks
+      document.getElementById("yesNoButtons").style.display = "none";
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDelay = Math.random() * 2 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
